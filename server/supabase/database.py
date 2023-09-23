@@ -7,7 +7,16 @@ from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{os.environ.get('SUPABASE_DB_PASSWORD')}@db.yxbqqxcdppdqapplvefk.supabase.co:5432/postgres"
+def get_db_url():
+    user = os.getenv("POSTGRES_USER", "postgres")
+    password = os.getenv("SUPABASE_DB_PASSWORD", "")
+    server = os.getenv("POSTGRES_SERVER", "db")
+    db = os.getenv("POSTGRES_DB", "app")
+    port = os.getenv("POSTGRES_PORT", 5432)
+    return f"postgresql://{user}:{password}@{server}:{port}/{db}"
+
+
+SQLALCHEMY_DATABASE_URL = get_db_url()
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
