@@ -21,8 +21,8 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 
-from supabase.models import User
-from supabase.database import Base
+from app.supabase.models import User
+from app.supabase.database import Base
 # target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
 
