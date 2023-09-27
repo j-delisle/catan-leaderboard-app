@@ -1,14 +1,33 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
+from starlette import status
+from typing import Annotated
+from sqlalchemy.orm import Session
 
 from supabase import crud, models, schemas, auth
-from supabase.database import engine
-from supabase.util import db_dep
+from supabase.database import engine, SessionLocal
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(auth.router)
 
+# Dependency Injection
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+db_dep = Annotated[Session, Depends(get_db)]
+user_dep = Annotated[dict, Depends(auth.get_current_user)]
+
+
+@app.get("/", status_code=status.HTTP_200_OK)
+async def user(user: user_dep, db: db_dep):
+    if user is None:
+        raise HTTPException(status_code=401, detail='Authorization Failed')
+    return {'user': user}
 
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: db_dep):

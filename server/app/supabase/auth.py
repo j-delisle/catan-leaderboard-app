@@ -2,18 +2,29 @@ import os
 from datetime import timedelta, datetime
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 from starlette import status
 from typing import Annotated
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from supabase.util import db_dep
 from supabase.models import User
+from supabase.database import SessionLocal
 from jose import jwt, JWTError
 
 router = APIRouter(
     prefix='/auth',
     tags=['auth']
 )
+
+# Dependency Injection
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+db_dep = Annotated[Session, Depends(get_db)]
 
 SECRET_KEY=os.environ.get('JWT_SECRET_KEY')
 ALGORITHM=os.environ.get('JWT_ALGORITHM')
