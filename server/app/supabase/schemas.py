@@ -35,3 +35,12 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+class GameRecordBase(BaseModel):
+    id: int
+    winner_id: int
+    expansion: str
+    date: str
+
+class GameRecordCreate(GameRecordBase):
+   pass 
