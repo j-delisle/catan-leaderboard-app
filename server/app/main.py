@@ -53,7 +53,7 @@ def read_user(user_id: int, db: db_dep):
 @app.get('/expansion_options')
 async def get_expansion_options():
     from supabase.models import EXPANSION_OPTIONS
-    return {'expansion_options': EXPANSION_OPTIONS.enums}
+    return {EXPANSION_OPTIONS.name: EXPANSION_OPTIONS.enums}
 
 @app.post("/record_game") #TODO add in reponse model
 async def record_game(data: schemas.GameRecordBase, db: db_dep):
