@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -7,6 +7,16 @@ from .database import Base
 
 def get_default_username(ctx):
     return ctx.get_current_parameters()["email"].split('@')[0]
+
+EXPANSION_OPTIONS = Enum(
+    'Catan Base',
+    'Seafarers',
+    'Cities & Knights',
+    'Explorers & Pirates',
+    'Extended',
+    'Game of Thrones',
+    name='expansion_options'
+)
 
 class User(Base):
     __tablename__ = "users"
@@ -25,7 +35,7 @@ class GameRecord(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     winner_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    expansion = Column(String, index=True)
+    expansion = Column(EXPANSION_OPTIONS, index=True)
     date = Column(DateTime, default=func.now())
     
     # Define a many-to-one relationship with User (the winner)
