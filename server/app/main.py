@@ -59,14 +59,3 @@ async def get_expansion_options():
 async def record_game(data: schemas.GameRecordBase, db: db_dep):
     crud.create_game_record(data, db)
 
-# @app.post("/users/{user_id}/items/", response_model=schemas.Item)
-# def create_item_for_user(
-#     user_id: int, item: schemas.ItemCreate, db: db_dep
-# ):
-#     return crud.create_user_item(db=db, item=item, user_id=user_id)
-
-
-# @app.get("/items/", response_model=list[schemas.Item])
-# def read_items(db: db_dep, skip: int = 0, limit: int = 100):
-#     items = crud.get_items(db, skip=skip, limit=limit)
-#     return items
