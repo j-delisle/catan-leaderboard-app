@@ -1,4 +1,4 @@
-from typing import Union
+from typing import List
 
 from pydantic import BaseModel
 
@@ -33,10 +33,12 @@ class User(UserBase):
 
 
 class GameRecordBase(BaseModel):
-    id: int
-    winner_id: int
+    winner_username: str
     expansion: str
     date: str
 
 class GameRecordCreate(GameRecordBase):
-   pass 
+    pass
+
+class GameRecord(GameRecordBase):
+    id: int

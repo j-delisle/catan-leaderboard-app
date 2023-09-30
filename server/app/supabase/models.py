@@ -17,6 +17,8 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
+    # Define a one-to-many relationship with GameRecord
+    game_records = relationship('GameRecord', back_populates='winner')
 
 class GameRecord(Base):
     __tablename__ = 'game_records'
@@ -26,19 +28,5 @@ class GameRecord(Base):
     expansion = Column(String, index=True)
     date = Column(DateTime, default=func.now())
     
-    # Define the many-to-many relationship with User
-    players = relationship('User', secondary='game_record_players')
-
-
-class GameRecordPlayer(Base):
-    __tablename__ = 'game_record_players'
-    
-    id = Column(Integer, primary_key=True, index=True)
-    game_record_id = Column(Integer, ForeignKey('game_records.id'))
-    user_id = Column(Integer, ForeignKey('users.id'))
-    
-    # Define a back-reference to GameRecord
-    game_record = relationship('GameRecord', back_populates='game_record_players')
-    
-    # Define a back-reference to User
-    user = relationship('User', back_populates='game_record_players')
+    # Define a many-to-one relationship with User (the winner)
+    winner = relationship('User', back_populates='game_records')

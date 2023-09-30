@@ -50,6 +50,9 @@ def read_user(user_id: int, db: db_dep):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
+@app.post("/record_game") #TODO add in reponse model
+async def record_game(data: schemas.GameRecordBase, db: db_dep):
+    crud.create_game_record(data, db)
 
 # @app.post("/users/{user_id}/items/", response_model=schemas.Item)
 # def create_item_for_user(
