@@ -1,13 +1,18 @@
 <script>
-	import { Alert } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div class="flex flex-col justify-center items-center">
+	<div class="mx-auto p-8 text-center">
+		<h1>Welcome to the Catan Leaderboard App!</h1>
+		<p>A leaderboard app to record games for Catan enthusiasts. All expansions are available!</p>
+	</div>
 
-<div class="p-8">
-	<Alert>
-		<span class="font-medium text-red-500">Info alert!</span>
-		Change a few things up and try submitting again.
-	</Alert>
+	<div class="p-8 max-w-screen-md w-96 mt-10">
+		<div class="flex flex-col space-y-10">
+			<Button href="/signup" size="lg">Sign Up</Button>
+			<Button href="/login" size="lg">Login</Button>
+			<Button href="/leaderboard" size="lg">See the Leaderboard</Button>
+		</div>
+	</div>
 </div>
