@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 
-export default function RootLayout() {
+export function RootLayout() {
   return (
     <>
       <header className="bg-white">

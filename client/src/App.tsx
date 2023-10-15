@@ -5,12 +5,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./App.css";
-import RootLayout from "./layouts/RootLayout";
+import { RootLayout } from "./layouts/RootLayout";
 
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
+import { Leaderboard } from "./pages/Leaderboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,12 +24,16 @@ const router = createBrowserRouter(
         element={<Home />}
       />
       <Route
-        path="/login"
+        path="login"
         element={<Login />}
       />
       <Route
-        path="/signup"
+        path="signup"
         element={<Signup />}
+      />
+      <Route
+        path="leaderboard"
+        element={<Leaderboard />}
       />
       <Route
         path="*"
