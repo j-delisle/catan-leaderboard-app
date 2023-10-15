@@ -1,16 +1,12 @@
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Routes, Route, NavLink } from "react-router-dom";
-import { Login } from "../pages/Login";
-import { Signup } from "../pages/SIgnup";
-import { Home } from "../pages/Home";
-import { NotFound } from "../pages/NotFound";
+import { NavLink } from "react-router-dom";
 
 const navigation = [
   { name: "Leaderboard", href: "/leaderboard" },
   { name: "Login", href: "/login" },
-  { name: "Company", href: "#" },
+  { name: "Post Game", href: "post_game" },
 ];
 
 export default function NavBar() {
@@ -33,25 +29,7 @@ export default function NavBar() {
     </NavLink>
   ));
   return (
-    <header className="bg-white">
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-        <Route
-          path="/signup"
-          element={<Signup />}
-        />
-        <Route
-          path="*"
-          element={<NotFound />}
-        />
-      </Routes>
+    <>
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8"
         aria-label="Global"
@@ -158,6 +136,6 @@ export default function NavBar() {
           </div>
         </Dialog.Panel>
       </Dialog>
-    </header>
+    </>
   );
 }
