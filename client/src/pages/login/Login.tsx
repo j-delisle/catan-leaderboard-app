@@ -1,3 +1,5 @@
+import LoginForm from "./LoginForm";
+
 export function Login() {
-  return <h1>Login page</h1>;
+    return <LoginForm />;
 }
