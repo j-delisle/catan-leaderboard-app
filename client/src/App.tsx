@@ -7,11 +7,11 @@ import {
 import "./App.css";
 import { RootLayout } from "./layouts/RootLayout";
 
-import { Login } from "./pages/Login";
-import { Signup } from "./pages/Signup";
-import { Home } from "./pages/Home";
+import { Login } from "./pages/login/Login";
+import { Signup } from "./pages/signup/Signup";
+import { Home } from "./pages/home/Home";
 import { NotFound } from "./pages/NotFound";
-import { Leaderboard } from "./pages/Leaderboard";
+import { Leaderboard } from "./pages/leaderboard/Leaderboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
