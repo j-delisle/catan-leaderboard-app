@@ -54,7 +54,10 @@ def create_user(user: schemas.UserCreate, db: db_dep):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.create_user(db=db, user=user)
+    created_user = crud.create_user(db=db, user=user)
+    token = auth.create_access_token(username=created_user.email, user_id=created_user.id)
+    created_user.token = token
+    return created_user
 
 
 @app.get("/users/", response_model=list[schemas.User])
