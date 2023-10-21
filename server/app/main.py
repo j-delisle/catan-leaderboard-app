@@ -2,6 +2,8 @@ from fastapi import FastAPI, HTTPException, Depends
 from starlette import status
 from typing import Annotated
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware import Middleware
 
 from supabase import crud, models, schemas, auth
 from supabase.database import engine, SessionLocal
@@ -10,6 +12,22 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(auth.router)
+
+
+# TODO CORS DEPLOYMENT - check security
+# origins = [
+#     'http://localhost:5173/',
+#     'localhost:5173'
+# ]
+# passing multiple hosts was causing CORS failure - preflight
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['http://localhost:5173'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # Dependency Injection
 def get_db():
@@ -31,6 +49,8 @@ async def user(user: user_dep, db: db_dep):
 
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: db_dep):
+    if user.password != user.passwordConfirm:
+        raise HTTPException(status_code=400, detail='Passwords do not match')
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
