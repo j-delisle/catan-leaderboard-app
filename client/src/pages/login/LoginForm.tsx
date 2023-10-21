@@ -6,8 +6,6 @@ export default function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(email, password);
   };
   return (
     <>

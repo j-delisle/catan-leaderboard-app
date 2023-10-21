@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import useSignUp from '../../hooks/useSignUp';
 
 export default function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const { signup, error, isLoading } = useSignUp();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password, passwordConfirm);
+    await signup(email, password, passwordConfirm);
   };
   return (
     <>
@@ -104,7 +106,11 @@ export default function SignUpForm() {
             </div>
 
             <div>
+              <div className='block my-2'>
+                {error && <p className='text-red-500'>{error}</p>}
+              </div>
               <button
+                disabled={isLoading}
                 type='submit'
                 className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
               >
