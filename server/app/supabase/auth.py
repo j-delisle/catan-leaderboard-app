@@ -46,8 +46,8 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
     return {'access_token': token, 'token_type': 'bearer'}
 
 
-def authenticate_user(username: str, password: str, db):
-    user = db.query(User).filter(User.username == username).first()
+def authenticate_user(email: str, password: str, db):
+    user = db.query(User).filter(User.email == email).first()
     if not user:
         return False
     if not bcrypt_context.verify(password, user.hashed_password):
