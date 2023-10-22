@@ -1,25 +1,20 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-export default function useSignUp() {
+export default function useLogin() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
   const navigate = useNavigate();
 
-  const signup = async (
-    email: String,
-    password: String,
-    passwordConfirm: String
-  ) => {
+  const login = async (formData: FormData) => {
     setIsLoading(true);
     setError(null);
 
-    const resp = await fetch('http://localhost:8000/users', {
+    const resp = await fetch('http://localhost:8000/auth/token', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, passwordConfirm }),
+      body: formData,
     });
 
     const json = await resp.json();
@@ -41,5 +36,5 @@ export default function useSignUp() {
     }
   };
 
-  return { signup, isLoading, error };
+  return { login, isLoading, error };
 }
