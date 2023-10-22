@@ -1,5 +1,5 @@
-import SignUpForm from "./SignUpForm";
+import SignUpForm from './SignUpForm';
 
 export function Signup() {
-    return <SignUpForm />;
+  return <SignUpForm />;
 }

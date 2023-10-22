@@ -1,10 +1,10 @@
-import { Outlet } from "react-router-dom";
-import NavBar from "./NavBar";
+import { Outlet } from 'react-router-dom';
+import NavBar from './NavBar';
 
 export function RootLayout() {
   return (
     <>
-      <header className="bg-white">
+      <header className='bg-white'>
         <NavBar />
       </header>
 
