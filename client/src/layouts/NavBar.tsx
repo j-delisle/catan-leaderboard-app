@@ -7,8 +7,8 @@ import { useLogout } from '../hooks/useLogout';
 
 const navigation = [
   { name: 'Leaderboard', href: '/leaderboard' },
-  { name: 'Login', href: '/login' },
-  { name: 'Post Game', href: 'post_game' },
+  { name: 'Profile', href: '/user/profile' },
+  { name: 'Post Game', href: '/user/post_game' },
 ];
 
 export default function NavBar() {

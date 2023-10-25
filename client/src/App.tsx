@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   Route,
   RouterProvider,
 } from 'react-router-dom';
@@ -12,20 +13,35 @@ import { Signup } from './pages/signup/Signup';
 import { Home } from './pages/home/Home';
 import { NotFound } from './pages/NotFound';
 import { Leaderboard } from './pages/leaderboard/Leaderboard';
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<RootLayout />}>
-      <Route index element={<Home />} />
-      <Route path='login' element={<Login />} />
-      <Route path='signup' element={<Signup />} />
-      <Route path='leaderboard' element={<Leaderboard />} />
-      <Route path='*' element={<NotFound />} />
-    </Route>
-  )
-);
+import { Profile } from './pages/profile/Profile';
+import { PostGame } from './pages/post_game/PostGame';
+import { useAuthContext } from './hooks/useAuthContext';
 
 function App() {
+  const { user } = useAuthContext();
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element={<RootLayout />}>
+        <Route index element={<Home />} />
+        <Route path='login' element={<Login />} />
+        <Route path='signup' element={<Signup />} />
+        <Route path='leaderboard' element={<Leaderboard />} />
+        <Route path='user'>
+          <Route
+            path='profile'
+            element={user ? <Profile /> : <Navigate to='/login' />}
+          />
+          <Route
+            path='post_game'
+            element={user ? <PostGame /> : <Navigate to='/login' />}
+          />
+        </Route>
+        <Route path='*' element={<NotFound />} />
+      </Route>
+    )
+  );
+
   return (
     <>
       <RouterProvider router={router} />
