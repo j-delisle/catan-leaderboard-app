@@ -78,6 +78,6 @@ async def get_expansion_options():
     return {models.EXPANSION_OPTIONS.name: models.EXPANSION_OPTIONS.enums}
 
 @app.post("/record_game") #TODO add in reponse model
-async def record_game(data: schemas.GameRecordBase, db: db_dep):
+async def record_game(data: schemas.GameRecordCreate, db: db_dep):
     crud.create_game_record(data, db)
 

@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, ARRAY
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -37,6 +37,7 @@ class GameRecord(Base):
     winner_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     expansion = Column(EXPANSION_OPTIONS, index=True)
     date = Column(DateTime, default=func.now())
+    players = Column(ARRAY(String))
     
     # Define a many-to-one relationship with User (the winner)
     winner = relationship('User', back_populates='game_records')

@@ -25,7 +25,7 @@ class GameRecordBase(BaseModel):
     date: str
 
 class GameRecordCreate(GameRecordBase):
-    pass
+    players: list
 
 class GameRecord(GameRecordBase):
     id: int
