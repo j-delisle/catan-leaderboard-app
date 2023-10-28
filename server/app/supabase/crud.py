@@ -28,7 +28,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 def create_game_record(data: schemas.GameRecordCreate, db: Session):
     winner_id = get_user_by_username(data.winner_username, db)
     record = models.GameRecord(winner_id=winner_id, expansion=data.expansion,
-                      date=data.date)
+                      date=data.date, players=data.players)
     db.add(record)
     db.commit()
     db.refresh(record)
