@@ -14,7 +14,7 @@ import { Home } from './pages/home/Home';
 import { NotFound } from './pages/NotFound';
 import { Leaderboard } from './pages/leaderboard/Leaderboard';
 import { Profile } from './pages/profile/Profile';
-import { PostGame } from './pages/post_game/PostGame';
+import { PostGame, postgameLoader } from './pages/post_game/PostGame';
 import { useAuthContext } from './hooks/useAuthContext';
 
 function App() {
@@ -35,6 +35,7 @@ function App() {
           <Route
             path='post_game'
             element={user ? <PostGame /> : <Navigate to='/login' />}
+            loader={postgameLoader}
           />
         </Route>
         <Route path='*' element={<NotFound />} />
