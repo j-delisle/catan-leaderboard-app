@@ -6,6 +6,9 @@ from pydantic import BaseModel
 class UserBase(BaseModel):
     email: str
 
+class UserRetrieval(BaseModel):
+    username: str
+
 class UserCreate(UserBase):
     password: str
     passwordConfirm: str

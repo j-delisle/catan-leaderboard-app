@@ -60,9 +60,9 @@ def create_user(user: schemas.UserCreate, db: db_dep):
     return created_user
 
 
-@app.get("/users/", response_model=list[schemas.User])
+@app.get("/users/", response_model=list[schemas.UserRetrieval])
 def read_users(db: db_dep, skip: int = 0, limit: int = 100):
-    users = crud.get_users(db, skip=skip, limit=limit)
+    users = crud.get_users_usernames(db, skip=skip, limit=limit)
     return users
 
 
