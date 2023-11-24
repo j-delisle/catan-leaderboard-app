@@ -1,5 +1,5 @@
 from typing import List
-
+from fastapi import Form
 from pydantic import BaseModel
 
 
@@ -28,7 +28,7 @@ class GameRecordBase(BaseModel):
     date: str
 
 class GameRecordCreate(GameRecordBase):
-    players: list
+    players: list[str]
 
 class GameRecord(GameRecordBase):
     id: int

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
@@ -6,11 +6,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function MenuSelect({ label, expansions }) {
-  const [selected, setSelected] = useState(expansions[0]);
-
+export default function MenuSelect({
+  label,
+  expansions,
+  selected,
+  setExpansion,
+}) {
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={(e) => setExpansion(e)}>
       {({ open }) => (
         <>
           <Listbox.Label className='block text-sm font-medium leading-6 text-gray-900'>

@@ -8,10 +8,11 @@ export function PostGame() {
 
 //loader func
 export const postgameLoader = async () => {
-  const res = await fetch('http://localhost:8000/expansion_options');
+  const res = await Promise.all([
+    fetch('http://localhost:8000/users'),
+    fetch('http://localhost:8000/expansion_options'),
+  ]);
+  const data = await Promise.all(res.map((r) => r.json()));
 
-  //   const users = await fetch('http://localhost:8000/users');
-  //   console.log('users', users.json());
-  return res.json();
-  // users: users.json(),
+  return data;
 };

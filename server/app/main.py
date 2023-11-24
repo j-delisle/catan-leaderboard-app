@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Form
 from starlette import status
 from typing import Annotated
 from sqlalchemy.orm import Session
@@ -78,6 +78,13 @@ async def get_expansion_options():
     return {models.EXPANSION_OPTIONS.name: models.EXPANSION_OPTIONS.enums}
 
 @app.post("/record_game") #TODO add in reponse model
-async def record_game(data: schemas.GameRecordCreate, db: db_dep):
+async def record_game(winner_username: Annotated[str, Form()], players: Annotated[list, Form()], expansion: Annotated[str, Form()], date: Annotated[str, Form()], db: db_dep, user_id: Annotated[str, Depends(auth.get_current_user)]):
+
+    data = schemas.GameRecordCreate(
+        winner_username=winner_username,
+        players=players,
+        date=date,
+        expansion=expansion)
+
     crud.create_game_record(data, db)
 
