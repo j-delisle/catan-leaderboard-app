@@ -24,6 +24,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True)
     username = Column(String, default=get_default_username, unique=True, index=True)
+    win_count = Column(Integer, default=0, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 

@@ -15,6 +15,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
+    win_count: int
     token: str
     is_active: bool
 

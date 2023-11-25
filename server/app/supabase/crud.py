@@ -36,3 +36,7 @@ def create_game_record(data: schemas.GameRecordCreate, db: Session):
     db.refresh(record)
     return record
 
+def update_user_win_count(user_id: int, db: Session):
+    user = get_user(db, user_id)
+    user.win_count += 1
+    db.commit()

@@ -88,6 +88,7 @@ async def record_game(winner_username: Annotated[str, Form()], players: Annotate
         expansion=expansion)
 
         crud.create_game_record(data, db)
+        crud.update_user_win_count(user_id['id'], db)
     
         return {'message': 'successful game record created'}
     except Exception as e:
