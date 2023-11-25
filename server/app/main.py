@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends, Form
 from starlette import status
-from typing import Annotated
+from typing import Annotated, List
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware import Middleware
@@ -76,6 +76,10 @@ def read_user(user_id: int, db: db_dep):
 @app.get('/expansion_options')
 async def get_expansion_options():
     return {models.EXPANSION_OPTIONS.name: models.EXPANSION_OPTIONS.enums}
+
+@app.get('/leaderboard', response_model=List[schemas.UserLeaderboard])
+async def get_leaderboard(db: db_dep):
+    return crud.get_leaderboard_users(db)
 
 @app.post("/record_game") #TODO add in reponse model
 async def record_game(winner_username: Annotated[str, Form()], players: Annotated[list, Form()], expansion: Annotated[str, Form()], date: Annotated[str, Form()], db: db_dep, user_id: Annotated[str, Depends(auth.get_current_user)]):

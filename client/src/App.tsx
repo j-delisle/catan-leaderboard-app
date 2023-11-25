@@ -12,7 +12,10 @@ import { Login } from './pages/login/Login';
 import { Signup } from './pages/signup/Signup';
 import { Home } from './pages/home/Home';
 import { NotFound } from './pages/NotFound';
-import { Leaderboard } from './pages/leaderboard/Leaderboard';
+import {
+  Leaderboard,
+  leaderboardLoader,
+} from './pages/leaderboard/Leaderboard';
 import { Profile } from './pages/profile/Profile';
 import { PostGame, postgameLoader } from './pages/post_game/PostGame';
 import { useAuthContext } from './hooks/useAuthContext';
@@ -26,7 +29,11 @@ function App() {
         <Route index element={<Home />} />
         <Route path='login' element={<Login />} />
         <Route path='signup' element={<Signup />} />
-        <Route path='leaderboard' element={<Leaderboard />} />
+        <Route
+          path='leaderboard'
+          element={<Leaderboard />}
+          loader={leaderboardLoader}
+        />
         <Route path='user'>
           <Route
             path='profile'

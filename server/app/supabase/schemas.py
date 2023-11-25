@@ -22,6 +22,14 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
+class UserLeaderboard(UserBase):
+    id: int
+    win_count: int
+    username: str
+
+    class Config:
+        orm_mode = True
+
 
 class GameRecordBase(BaseModel):
     winner_username: str

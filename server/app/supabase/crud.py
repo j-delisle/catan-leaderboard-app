@@ -1,23 +1,8 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 
 from . import models, schemas, auth
 
-
-def get_user(db: Session, user_id: int):
-    return db.query(models.User).filter(models.User.id == user_id).first()
-
-
-def get_user_by_email(db: Session, email: str):
-    return db.query(models.User).filter(models.User.email == email).first()
-
-def get_user_by_username(username: str, db: Session):
-    return db.query(models.User).filter(models.User.username == username).first().id
-
-def get_users(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.User).offset(skip).limit(limit).all()
-
-def get_users_usernames(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.User.username, models.User.id).offset(skip).limit(limit).all()
 
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = auth.bcrypt_context.hash(user.password)
@@ -35,6 +20,25 @@ def create_game_record(data: schemas.GameRecordCreate, db: Session):
     db.commit()
     db.refresh(record)
     return record
+
+def get_leaderboard_users(db: Session):
+    return db.query(models.User).with_entities(models.User.id, models.User.email,
+                                               models.User.username, models.User.win_count).order_by(desc(models.User.win_count)).all()
+
+def get_user(db: Session, user_id: int):
+    return db.query(models.User).filter(models.User.id == user_id).first()
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first()
+
+def get_user_by_username(username: str, db: Session):
+    return db.query(models.User).filter(models.User.username == username).first().id
+
+def get_users(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.User).offset(skip).limit(limit).all()
+
+def get_users_usernames(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.User.username, models.User.id).offset(skip).limit(limit).all()
 
 def update_user_win_count(user_id: int, db: Session):
     user = get_user(db, user_id)
