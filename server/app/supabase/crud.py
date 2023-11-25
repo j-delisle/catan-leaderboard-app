@@ -40,3 +40,5 @@ def update_user_win_count(user_id: int, db: Session):
     user = get_user(db, user_id)
     user.win_count += 1
     db.commit()
+    db.refresh(user)
+    return user
