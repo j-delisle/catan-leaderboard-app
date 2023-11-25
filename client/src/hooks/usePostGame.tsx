@@ -12,26 +12,31 @@ export default function usePostGame() {
     setIsLoading(true);
     setError(null);
 
-    const resp = await fetch('http://localhost:8000/record_game', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${user.access_token}`,
-      },
-      body: formData,
-    });
-
-    const json = await resp.json();
-    console.log('resp json', json);
-
-    if (!resp.ok) {
-      setIsLoading(false);
-      setError(json.detail);
+    if (!user) {
+      navigate('/login');
     }
 
-    if (resp.ok) {
-      setIsLoading(false);
+    if (user) {
+      const resp = await fetch('http://localhost:8000/record_game', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${user.access_token}`,
+        },
+        body: formData,
+      });
 
-      navigate('/leaderboard');
+      const json = await resp.json();
+
+      if (!resp.ok) {
+        setIsLoading(false);
+        setError(json.detail);
+      }
+
+      if (resp.ok) {
+        setIsLoading(false);
+
+        navigate('/leaderboard');
+      }
     }
   };
 

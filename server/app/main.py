@@ -80,11 +80,18 @@ async def get_expansion_options():
 @app.post("/record_game") #TODO add in reponse model
 async def record_game(winner_username: Annotated[str, Form()], players: Annotated[list, Form()], expansion: Annotated[str, Form()], date: Annotated[str, Form()], db: db_dep, user_id: Annotated[str, Depends(auth.get_current_user)]):
 
-    data = schemas.GameRecordCreate(
+    try:
+        data = schemas.GameRecordCreate(
         winner_username=winner_username,
         players=players,
         date=date,
         expansion=expansion)
 
-    crud.create_game_record(data, db)
+        crud.create_game_record(data, db)
+    
+        return {'message': 'successful game record created'}
+    except Exception as e:
+        msg = e.msg
+        raise HTTPException(status_code=400 , detail=msg)
+    
 
