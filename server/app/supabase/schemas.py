@@ -25,6 +25,8 @@ class User(UserBase):
 class UserLeaderboard(UserBase):
     id: int
     win_count: int
+    games_played: int
+    win_percent: float
     username: str
 
     class Config:

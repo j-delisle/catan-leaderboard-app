@@ -1,5 +1,6 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, ARRAY
-from sqlalchemy.orm import relationship
+from sqlalchemy import Boolean, Column, ForeignKey, Integer,\
+    String, DateTime, Enum, ARRAY, Float
+from sqlalchemy.orm import relationship, validates
 from sqlalchemy.sql import func
 
 from .database import Base
@@ -25,6 +26,8 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     username = Column(String, default=get_default_username, unique=True, index=True)
     win_count = Column(Integer, default=0, index=True)
+    games_played = Column(Integer, default=0, index=True)
+    win_percent = Column(Float, default=0, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
