@@ -17,19 +17,19 @@ export default function LeaderboardTable(data) {
                   </th>
                   <th
                     scope='col'
-                    className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    className='px-3 py-3.5 text-center text-sm font-semibold text-gray-900'
                   >
                     Wins
                   </th>
                   <th
                     scope='col'
-                    className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    className='px-3 py-3.5 text-center text-sm font-semibold text-gray-900'
                   >
                     Games Played
                   </th>
                   <th
                     scope='col'
-                    className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                    className='px-3 py-3.5 text-center text-sm font-semibold text-gray-900'
                   >
                     Win Percentage
                   </th>
@@ -68,9 +68,9 @@ export default function LeaderboardTable(data) {
                       {/* </div> */}
                     </td>
                     <td className='whitespace-nowrap px-3 py-5 text-sm text-gray-500'>
-                      <span className='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                        {data.games_played}
-                      </span>
+                      {data.games_played}
+                      {/* <span className='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'> */}
+                      {/* </span> */}
                     </td>
                     <td className='whitespace-nowrap px-3 py-5 text-sm text-gray-500'>
                       {data.win_percent} %
