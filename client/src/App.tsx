@@ -16,9 +16,11 @@ import {
   Leaderboard,
   leaderboardLoader,
 } from './pages/leaderboard/Leaderboard';
-import { Profile } from './pages/profile/Profile';
 import { PostGame, postgameLoader } from './pages/post_game/PostGame';
 import { useAuthContext } from './hooks/useAuthContext';
+import { ProfileLayout } from './layouts/ProfileLayout';
+import { UserInfo } from './pages/profile/UserInfo';
+import { UserGames } from './pages/profile/UserGames';
 
 function App() {
   const { user } = useAuthContext();
@@ -37,8 +39,17 @@ function App() {
         <Route path='user'>
           <Route
             path='profile'
-            element={user ? <Profile /> : <Navigate to='/login' />}
-          />
+            element={user ? <ProfileLayout /> : <Navigate to='/login' />}
+          >
+            <Route
+              path='settings'
+              element={user ? <UserInfo /> : <Navigate to='/login' />}
+            />
+            <Route
+              path='games'
+              element={user ? <UserGames /> : <Navigate to='/login' />}
+            />
+          </Route>
           <Route
             path='post_game'
             element={user ? <PostGame /> : <Navigate to='/login' />}

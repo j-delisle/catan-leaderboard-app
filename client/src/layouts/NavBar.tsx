@@ -7,7 +7,7 @@ import { useLogout } from '../hooks/useLogout';
 
 const navigation = [
   { name: 'Leaderboard', href: '/leaderboard' },
-  { name: 'Profile', href: '/user/profile' },
+  { name: 'Profile', href: '/user/profile/settings' },
   { name: 'Post Game', href: '/user/post_game' },
 ];
 
@@ -33,7 +33,7 @@ export default function NavBar() {
     <NavLink
       to={item.href}
       className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
-      reloadDocument
+      onClick={() => setMobileMenuOpen(false)}
     >
       {item.name}
     </NavLink>
