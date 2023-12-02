@@ -16,7 +16,7 @@ export function ProfileLayout() {
         <body class="h-full">
         ```
       */}
-      <div>
+      <div className='h-full bg-gray-900 rounded-lg'>
         <div className='xl:pl-72'>
           <main>
             <header className='border-b border-white/5'>
@@ -30,7 +30,9 @@ export function ProfileLayout() {
                     <li key={item.name}>
                       <NavLink
                         to={item.href}
-                        className={item.current ? 'text-indigo-400' : ''}
+                        className={({ isActive }) =>
+                          isActive ? 'text-indigo-400' : ''
+                        }
                       >
                         {item.name}
                       </NavLink>
