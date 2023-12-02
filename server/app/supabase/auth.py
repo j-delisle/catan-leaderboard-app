@@ -35,6 +35,7 @@ oauth2_bearer = OAuth2PasswordBearer(tokenUrl='/auth/token')
 class Token(BaseModel):
     access_token: str
     token_type: str
+    id: int
 
 @router.post('/token', response_model=Token)
 async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: db_dep):
@@ -43,7 +44,7 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Could not validate user.')
     token = create_access_token(user.username, user.id)
-    return {'access_token': token, 'token_type': 'bearer'}
+    return {'access_token': token, 'token_type': 'bearer', 'id': user.id}
 
 
 def authenticate_user(email: str, password: str, db):

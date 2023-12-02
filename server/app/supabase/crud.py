@@ -40,9 +40,6 @@ def get_user_by_username(username: str, db: Session):
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
 
-def get_users_usernames(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.User.username, models.User.id).offset(skip).limit(limit).all()
-
 def update_players_game_stats(db: Session, players: List[int]):
     for player in players:
         user = get_user(db=db, user_id=player)

@@ -8,6 +8,8 @@ class UserBase(BaseModel):
 
 class UserRetrieval(BaseModel):
     username: str
+    email: str
+    id: int
 
 class UserCreate(UserBase):
     password: str
