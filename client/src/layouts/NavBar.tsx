@@ -114,13 +114,23 @@ export default function NavBar() {
                 alt=''
               />
             </NavLink>
-            <NavLink
-              to='/signup'
-              className='ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-              reloadDocument
-            >
-              Sign up
-            </NavLink>
+            {user ? (
+              <NavLink
+                onClick={handleLogout}
+                to='/login'
+                className='ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+              >
+                Logout
+              </NavLink>
+            ) : (
+              <NavLink
+                to='/signup'
+                className='ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                reloadDocument
+              >
+                Sign up
+              </NavLink>
+            )}
             <button
               type='button'
               className='-m-2.5 rounded-md p-2.5 text-gray-700'
@@ -136,13 +146,17 @@ export default function NavBar() {
                 <ul>{navMobile}</ul>
               </div>
               <div className='py-6'>
-                <NavLink
-                  to='/login'
-                  className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
-                  reloadDocument
-                >
-                  Log in
-                </NavLink>
+                {user ? (
+                  <div></div>
+                ) : (
+                  <NavLink
+                    to='/login'
+                    className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+                    reloadDocument
+                  >
+                    Log in
+                  </NavLink>
+                )}
               </div>
             </div>
           </div>
