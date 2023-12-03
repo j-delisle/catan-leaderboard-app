@@ -21,6 +21,7 @@ import { useAuthContext } from './hooks/useAuthContext';
 import { ProfileLayout } from './layouts/ProfileLayout';
 import { UserInfo } from './pages/profile/UserInfo';
 import { UserGames } from './pages/profile/UserGames';
+import { userSettingsLoader } from './pages/profile/UserSettings';
 
 function App() {
   const { user } = useAuthContext();
@@ -44,6 +45,7 @@ function App() {
             <Route
               path='settings'
               element={user ? <UserInfo /> : <Navigate to='/login' />}
+              loader={userSettingsLoader}
             />
             <Route
               path='games'

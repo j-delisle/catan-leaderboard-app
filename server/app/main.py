@@ -73,6 +73,20 @@ def read_user(user_id: int, db: db_dep):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
+@app.patch("/users/{user_id}", response_model=schemas.UserSettings)
+def patch_update_user(user_id: int, email: Annotated[str, Form(...)],
+                      username: Annotated[str, Form(...)], db: db_dep):
+    db_user = crud.get_user(user_id=user_id, db=db)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    data = schemas.UserSettings(
+        id=user_id,
+        email=email,
+        username=username
+    )
+    updated_user = crud.update_user_settings(exist_user=db_user, update_user=data, db=db)
+    return updated_user
+
 @app.get('/expansion_options')
 async def get_expansion_options():
     return {models.EXPANSION_OPTIONS.name: models.EXPANSION_OPTIONS.enums}

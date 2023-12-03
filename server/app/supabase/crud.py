@@ -47,9 +47,17 @@ def update_players_game_stats(db: Session, players: List[int]):
         user.win_percent = _get_win_percentage(user.win_count, user.games_played)
         db.commit()
 
+def update_user_settings(exist_user: models.User, update_user: schemas.UserSettings, db: Session):
+    update_data = update_user.model_dump(exclude_unset=True)
+    for k,v in update_data.items():
+        setattr(exist_user, k, v)
+    db.commit()
+    db.refresh(exist_user)
+    return exist_user
+
 def update_user_win_count(user_id: int, db: Session):
     user = get_user(db, user_id)
-    user.win_count += 1
+    user.win_count = user.win_count + 1
     db.commit()
     db.refresh(user)
     return user

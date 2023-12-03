@@ -1,21 +1,13 @@
 import { NavLink, Outlet } from 'react-router-dom';
 
 const profileNav = [
-  { name: 'Settings', href: '/user/profile/settings', current: true },
-  { name: 'Games Played', href: '/user/profile/games', current: false },
+  { name: 'Settings', href: '/user/profile/settings' },
+  { name: 'Stats', href: '/user/profile/games' },
 ];
 
 export function ProfileLayout() {
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-900">
-        <body class="h-full">
-        ```
-      */}
       <div className='h-full bg-gray-900 rounded-lg'>
         <div className='xl:pl-72'>
           <main>

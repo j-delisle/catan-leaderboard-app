@@ -6,17 +6,12 @@ import MenuSelect from '../../components/MenuSelect';
 
 export default function PostGameForm({ data }) {
   const exp_opts = data[1].expansion_options;
-  // const users = data[0];
-  // const user_list = data[0].map((user) => user.username);
   const user_list = data[0];
-  // console.log('usssserssssss', user_list);
-  // console.log('data being printed out for both', exp_opts, user_list);
   const [winner, setWinner] = useState('');
   const [players, setPlayers] = useState([]);
   const [date, setDate] = useState('');
   const [expansion, setExpansion] = useState(exp_opts[0]);
   const { postGame, error, isLoading } = usePostGame();
-  // console.log(data.expansion_options);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

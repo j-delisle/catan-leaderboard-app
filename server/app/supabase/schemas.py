@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from fastapi import Form
 from pydantic import BaseModel
 
@@ -10,6 +10,9 @@ class UserRetrieval(BaseModel):
     username: str
     email: str
     id: int
+
+class UserSettings(UserRetrieval):
+    image: Optional[str] = None
 
 class UserCreate(UserBase):
     password: str
