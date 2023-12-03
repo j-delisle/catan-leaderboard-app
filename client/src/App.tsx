@@ -46,7 +46,7 @@ function App() {
               loader={userSettingsLoader}
             />
             <Route
-              path='games'
+              path='stats'
               element={user ? <UserGames /> : <Navigate to='/login' />}
             />
           </Route>

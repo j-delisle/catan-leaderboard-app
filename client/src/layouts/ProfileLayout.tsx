@@ -2,7 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 const profileNav = [
   { name: 'Settings', href: '/user/profile/settings' },
-  { name: 'Stats', href: '/user/profile/games' },
+  { name: 'Stats', href: '/user/profile/stats' },
 ];
 
 export function ProfileLayout() {

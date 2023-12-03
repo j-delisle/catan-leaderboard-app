@@ -32,7 +32,7 @@ export default function useLogin() {
       dispatch({ type: 'LOGIN', payload: json });
       setIsLoading(false);
 
-      navigate('/leaderboard');
+      navigate('/user/profile/stats');
     }
   };
 
