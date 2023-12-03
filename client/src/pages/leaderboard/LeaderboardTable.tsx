@@ -1,6 +1,7 @@
-export default function LeaderboardTable(data) {
-  const users = data.data;
-  console.log(users);
+import { useLoaderData } from 'react-router-dom';
+
+export default function LeaderboardTable() {
+  const users = useLoaderData();
   return (
     <div className='px-4 sm:px-6 lg:px-8'>
       <div className='mt-8 flow-root'>
@@ -85,3 +86,10 @@ export default function LeaderboardTable(data) {
     </div>
   );
 }
+
+// leaderboard loader function
+export const leaderboardLoader = async () => {
+  const res = await fetch('http://localhost:8000/leaderboard');
+  const data = await res.json();
+  return data;
+};

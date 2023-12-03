@@ -12,16 +12,14 @@ import { Login } from './pages/login/Login';
 import { Signup } from './pages/signup/Signup';
 import { Home } from './pages/home/Home';
 import { NotFound } from './pages/NotFound';
-import {
-  Leaderboard,
-  leaderboardLoader,
-} from './pages/leaderboard/Leaderboard';
+import { Leaderboard } from './pages/leaderboard/Leaderboard';
 import { PostGame, postgameLoader } from './pages/post_game/PostGame';
 import { useAuthContext } from './hooks/useAuthContext';
 import { ProfileLayout } from './layouts/ProfileLayout';
 import { UserInfo } from './pages/profile/UserInfo';
 import { UserGames } from './pages/profile/UserGames';
 import { userSettingsLoader } from './pages/profile/UserSettings';
+import { leaderboardLoader } from './pages/leaderboard/LeaderboardTable';
 
 function App() {
   const { user } = useAuthContext();
