@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware import Middleware
 
-from supabase import crud, models, schemas, auth
-from supabase.database import engine, SessionLocal
+from src import crud, models, schemas, auth
+from src.database import engine, SessionLocal
 
 models.Base.metadata.create_all(bind=engine)
 

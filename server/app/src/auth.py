@@ -7,8 +7,8 @@ from starlette import status
 from typing import Annotated
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from supabase.models import User
-from supabase.database import SessionLocal
+from src.models import User
+from src.database import SessionLocal
 from jose import jwt, JWTError
 
 router = APIRouter(
