@@ -7,6 +7,7 @@ class UserBase(BaseModel):
     email: str
 
 class UserRetrieval(BaseModel):
+    pfp_url: str
     username: str
     email: str
     id: int
