@@ -1,9 +1,12 @@
+import os
+
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
 from typing import List
 
 from . import models, schemas, auth
+from services.supa import supabase_cli
 
 
 def create_user(db: Session, user: schemas.UserCreate):
@@ -39,6 +42,30 @@ def get_user_by_username(username: str, db: Session):
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
+
+def update_user_image(pfp, user_id, db: Session):
+    try:
+        bucket_loc = os.path.join('.', str(user_id), pfp.filename)
+        m_ext = os.path.splitext(pfp.filename)[1].lower()
+        mtype = f'image/{m_ext[1:]}'
+        image_local_path = os.path.join('assets', pfp.filename)
+        with open(image_local_path, 'rb') as f:
+            supabase_cli.storage.from_("profile-images").upload(file=f,path=bucket_loc, file_options={"content-type": mtype})
+    except Exception as e:
+        msg = 'Error during upload to bucket: ' + str(e)
+        return {'message': msg}
+    finally:
+        pfp.file.close()
+    pub_img_url = supabase_cli.storage.from_('profile-images').get_public_url(bucket_loc)
+    print(pub_img_url)
+    return pub_img_url
+
+def update_user_img_db_url(img_url, user_id, db: Session):
+    user = get_user(user_id=user_id, db=db)
+    user.pfp_url = img_url
+    db.commit()
+    db.refresh(user)
+    return user
 
 def update_players_game_stats(db: Session, players: List[int]):
     for player in players:

@@ -1,11 +1,13 @@
-from fastapi import FastAPI, HTTPException, Depends, Form
+import os
+
+from fastapi import FastAPI, HTTPException, Depends, Form, UploadFile, File
 from starlette import status
 from typing import Annotated, List
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware import Middleware
 
-from src import crud, models, schemas, auth
+from src import crud, models, schemas, auth, utils
 from src.database import engine, SessionLocal
 
 models.Base.metadata.create_all(bind=engine)
@@ -74,8 +76,7 @@ def read_user(user_id: int, db: db_dep):
     return db_user
 
 @app.patch("/users/{user_id}", response_model=schemas.UserSettings)
-def patch_update_user(user_id: int, email: Annotated[str, Form(...)],
-                      username: Annotated[str, Form(...)], db: db_dep):
+def patch_update_user(user_id: int, email: Annotated[str, Form(...)], username: Annotated[str, Form(...)], db: db_dep, pfp: UploadFile = File(None)):
     db_user = crud.get_user(user_id=user_id, db=db)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -85,6 +86,22 @@ def patch_update_user(user_id: int, email: Annotated[str, Form(...)],
         username=username
     )
     updated_user = crud.update_user_settings(exist_user=db_user, update_user=data, db=db)
+
+    if pfp:
+        try:
+            contents = pfp.file.read()
+            image_filename = utils.generate_uuid_filename(user_id, pfp.filename)
+            pfp.filename = image_filename
+            local_image_loc = os.path.join('assets', image_filename)
+            with open(local_image_loc, 'wb') as f:
+                f.write(contents)
+        except Exception:
+            return {"message": "There was an error uploading the file"}
+        finally:
+            pfp.file.close()
+
+        user_img_url = crud.update_user_image(pfp, user_id=user_id, db=db)
+        updated_user = crud.update_user_img_db_url(user_img_url, user_id=user_id, db=db)
     return updated_user
 
 @app.get('/expansion_options')

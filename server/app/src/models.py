@@ -19,12 +19,15 @@ EXPANSION_OPTIONS = Enum(
     name='expansion_options'
 )
 
+DEFAULT_PFP = 'https://yxbqqxcdppdqapplvefk.supabase.co/storage/v1/object/public/profile-images/default_pfp.png'
+
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True)
     username = Column(String, default=get_default_username, unique=True, index=True)
+    pfp_url = Column(String, default=DEFAULT_PFP, index=True)
     win_count = Column(Integer, default=0, index=True)
     games_played = Column(Integer, default=0, index=True)
     win_percent = Column(Float, default=0, index=True)
