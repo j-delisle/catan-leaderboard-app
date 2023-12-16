@@ -57,7 +57,6 @@ def update_user_image(pfp, user_id, db: Session):
     finally:
         pfp.file.close()
     pub_img_url = supabase_cli.storage.from_('profile-images').get_public_url(bucket_loc)
-    print(pub_img_url)
     return pub_img_url
 
 def update_user_img_db_url(img_url, user_id, db: Session):

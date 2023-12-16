@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { redirect, useLoaderData } from 'react-router-dom';
 import useUpdateUserSettings from '../../hooks/useUpdateUserSettings';
 import ErrorAlertBanner from '../../components/ErrorAlertBanner';
 import SuccessAlertBanner from '../../components/SuccessAlertBanner';
@@ -119,7 +119,11 @@ export function UserSettings() {
 // User data loader
 export const userSettingsLoader = async () => {
   const user = JSON.parse(localStorage.getItem('user'));
-  const res = await fetch(`http://localhost:8000/users/${user.id}`);
-  const data = await res.json();
-  return data;
+  if (user) {
+    const res = await fetch(`http://localhost:8000/users/${user.id}`);
+    const data = await res.json();
+    return data;
+  } else {
+    return redirect('/login');
+  }
 };
