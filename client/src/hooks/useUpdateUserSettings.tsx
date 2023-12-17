@@ -6,6 +6,7 @@ export default function useUpdateUserSettings() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [success, setSuccess] = useState('');
+  const [pfp, setPfp] = useState('');
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -36,9 +37,10 @@ export default function useUpdateUserSettings() {
       if (resp.ok) {
         setIsLoading(false);
         setSuccess('User Settings Updated Successfully');
+        setPfp(json.pfp_url);
       }
     }
   };
 
-  return { updateUserSettings, isLoading, error, success };
+  return { updateUserSettings, isLoading, error, success, pfp };
 }

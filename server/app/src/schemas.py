@@ -6,13 +6,16 @@ from pydantic import BaseModel
 class UserBase(BaseModel):
     email: str
 
-class UserRetrieval(BaseModel):
-    pfp_url: str
+
+class UserSettingsBase(BaseModel):
     username: str
     email: str
     id: int
 
-class UserSettings(UserRetrieval):
+class UserSettingsRetrieval(UserSettingsBase):
+    pfp_url: str
+
+class UserSettings(UserSettingsBase):
     image: Optional[str] = None
 
 class UserCreate(UserBase):

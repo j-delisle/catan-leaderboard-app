@@ -62,25 +62,25 @@ def create_user(user: schemas.UserCreate, db: db_dep):
     return created_user
 
 
-@app.get("/users/", response_model=list[schemas.UserRetrieval])
+@app.get("/users/", response_model=list[schemas.UserSettingsRetrieval])
 def read_users(db: db_dep, skip: int = 0, limit: int = 100):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
 
-@app.get("/users/{user_id}", response_model=schemas.UserRetrieval)
+@app.get("/users/{user_id}", response_model=schemas.UserSettingsRetrieval)
 def read_user(user_id: int, db: db_dep):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-@app.patch("/users/{user_id}", response_model=schemas.UserSettings)
+@app.patch("/users/{user_id}", response_model=schemas.UserSettingsRetrieval)
 def patch_update_user(user_id: int, email: Annotated[str, Form(...)], username: Annotated[str, Form(...)], db: db_dep, pfp: UploadFile = File(None)):
     db_user = crud.get_user(user_id=user_id, db=db)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    data = schemas.UserSettings(
+    data = schemas.UserSettingsBase(
         id=user_id,
         email=email,
         username=username

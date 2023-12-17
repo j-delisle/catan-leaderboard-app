@@ -9,7 +9,9 @@ export function UserSettings() {
 
   const [email, setEmail] = useState(user_data.email);
   const [username, setUsername] = useState(user_data.username);
-  const { updateUserSettings, isLoading, error, success } =
+  const [pfp, setPfp] = useState(user_data.pfp_url);
+  const [file, setFile] = useState(undefined);
+  const { updateUserSettings, isLoading, error, success, new_pfp } =
     useUpdateUserSettings();
 
   const handleSave = async (e) => {
@@ -18,8 +20,20 @@ export function UserSettings() {
     const formData = new FormData(e.target);
     formData.append('email', email);
     formData.append('username', username);
+    formData.append('pfp', file);
 
     await updateUserSettings(formData);
+
+    // TODO: Below if broken - need to refresh pfp when new one is uploaded
+    if (new_pfp != pfp) {
+      console.log('old url', pfp);
+      setPfp(new_pfp);
+      console.log('new url', new_pfp);
+    }
+  };
+
+  const handleFile = async (e) => {
+    setFile(e.target.files[0]);
   };
 
   return (
@@ -37,11 +51,17 @@ export function UserSettings() {
         <div className='flex flex-col space-y-10'>
           <div className='col-span-full flex items-center gap-x-8'>
             <img
-              src={user_data.pfp_url}
+              src={pfp}
               alt=''
               className='h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover'
             />
             <div>
+              <input
+                type='file'
+                className='min-w-[100px] rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20'
+                name='image'
+                onChange={handleFile}
+              />
               <button
                 type='button'
                 className='min-w-[100px] rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20'
